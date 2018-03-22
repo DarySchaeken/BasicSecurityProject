@@ -20,10 +20,14 @@ label {
 }
 
 form {
-    margin-left: 30%;
-    margin-right: 20%;
+    margin-left: 40%;
+    margin-right: 10%;
 }
+table {
+    width: 50%;
+}
+
 td {
-    width: 25%;
+    width: 50%;
 }
 
