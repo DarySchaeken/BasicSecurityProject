@@ -11,6 +11,19 @@ p {
     font-size: xx-large;
 }
 
-section {
+#logo>section {
     margin: 25% auto;
 }
+
+label {
+    color: white;
+}
+
+form {
+    margin-left: 30%;
+    margin-right: 20%;
+}
+td {
+    width: 25%;
+}
+

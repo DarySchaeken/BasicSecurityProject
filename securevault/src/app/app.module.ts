@@ -5,14 +5,16 @@ import { NgModule } from '@angular/core';
 import { LogoComponent } from './logo.component';
 
 
+
 @NgModule({
-  declarations: [
+    declarations: [
     LogoComponent
   ],
-  imports: [
-    BrowserModule
-  ],
+    imports: [
+        BrowserModule
+    ],
   providers: [],
   bootstrap: [LogoComponent]
 })
-export class AppModule { }
+
+export class AppModule {}

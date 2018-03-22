@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./logo.component.css']
 })
 export class LogoComponent {
-  title = 'app';
 }
