@@ -1,0 +1,100 @@
+#right-pane {
+    float: right;
+    height: 100%;
+    width: 75%;
+    border-left: 1px solid #66ccff;
+}
+#header {
+    width: 100%;
+    height: 10%;
+    background-color: #66ccff;
+    color: white;
+}
+
+#header > p {
+    padding-top: 2%;
+    margin-top: 0%;
+    padding-left: 45%;
+    font-size: x-large;
+}
+
+#messages {
+    float: right;
+    height: 80%;
+    width: 100%;
+    border-bottom: 1px solid #66ccff;
+}
+
+.message {
+    color: #000;
+    clear: both;
+    line-height: 18px;
+    font-size: 15px;
+    padding: 8px;
+    position: relative;
+    margin: 8px 2%;
+    max-width: 50%;
+    word-wrap: break-word;
+    z-index: -1;
+}
+
+.message.recieved {
+    border: solid 1px lightgrey;
+    border-radius: 5px;
+    float: left;
+    background-color: #F2F2F2;
+}
+
+.message.sent {
+    border: solid 1px cornflowerblue;
+    border-radius: 5px;
+    background-color: #66ccff;
+    color: white;
+    float: right;
+}
+
+#sendingPane {
+    height: 10%;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+td:nth-child(even){
+    width: 50%;
+}
+
+td:nth-child(odd) {
+    width: 25%;
+}
+
+img {
+    height: 100%;
+    width: 30%;
+}
+
+#linkImage {
+    margin-left: 1%;
+    float: left;
+}
+
+#sendingItem {
+    border-radius: 5px;
+    background-color: #F2F2F2;
+    border: solid 1px lightgrey;
+    width: 100%;
+    margin-top: 1%;
+    height: 70%;
+    float: right;
+}
+
+#sendingItem > p {
+    margin-left: 40%;
+    margin-right: 25%;
+}
+
+#sentImage {
+    float: right;
+}
