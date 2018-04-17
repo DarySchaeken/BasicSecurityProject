@@ -1,0 +1,32 @@
+img {
+    width: 15%;
+    height: 15%;
+    display: block;
+    margin: auto;
+}
+
+p {
+    text-align: center;
+    color: white;
+    font-size: xx-large;
+}
+
+#logo>section {
+    margin: 25% auto;
+}
+
+label {
+    color: white;
+}
+
+form {
+    margin-left: 40%;
+    margin-right: 10%;
+}
+table {
+    width: 50%;
+}
+
+td {
+    width: 50%;
+}
