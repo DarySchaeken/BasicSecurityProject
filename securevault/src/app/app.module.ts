@@ -24,7 +24,7 @@ import {environment} from '../environments/environment';
     imports: [
         BrowserModule,
         RouterModule.forRoot([
-                { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Securevault | Login' } },
+                { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Securevault | Login' }},
                 { path: 'message', component: MessageContainerComponent , data: { title: 'Securevault | Message'} }
                 ]),
         AngularFireModule.initializeApp(environment.firebase),
