@@ -1,16 +1,13 @@
 import {BrowserModule} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import { LoginComponent } from './Login/login.component';
 import { AppComponent } from './app.component';
 import { LeftMessagingPaneComponent } from './left-messaging-pane/left-messaging-pane.component';
 import {RouterModule} from '@angular/router';
 import { MessageContainerComponent } from './message-container/message-container.component';
 import { RightMessagingPaneComponent } from './right-messaging-pane/right-messaging-pane.component';
-import {environment} from '../environments/environment';
 
 
 @NgModule({
@@ -19,7 +16,7 @@ import {environment} from '../environments/environment';
         AppComponent,
         LeftMessagingPaneComponent,
         MessageContainerComponent,
-        RightMessagingPaneComponent,
+        RightMessagingPaneComponent
   ],
     imports: [
         BrowserModule,
@@ -27,9 +24,7 @@ import {environment} from '../environments/environment';
                 { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Securevault | Login' }},
                 { path: 'message', component: MessageContainerComponent , data: { title: 'Securevault | Message'} }
                 ]),
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireDatabaseModule,
-        AngularFireAuthModule
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]
