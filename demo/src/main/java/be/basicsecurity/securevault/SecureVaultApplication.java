@@ -1,4 +1,4 @@
-package com.basicsecurity.SecureVault;
+package be.basicsecurity.securevault;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.basicsecurity.SecureVault;
+package com.basicsecurity.securevault;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
