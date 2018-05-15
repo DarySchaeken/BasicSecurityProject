@@ -1,6 +1,6 @@
 package be.basicsecurity.securevault.controllers;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,19 +21,32 @@ public class AccountsController {
 	@Autowired
 	private AccountRepository accountRepository;
 	
-	@GetMapping
-	public List<Account> list(){
-		return accountRepository.findAll();
-	}
-	
-	@PostMapping
+	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@RequestBody Account account) {
+	public String create(@RequestBody Map<String, Object> json) {
+		String username =  json.get("username").toString();
+		String password = json.get("password").toString();
+		Account account = new Account(username, password);
 		accountRepository.save(account);
+		return "Created";
 	}
 	
+	@PostMapping("/login")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public boolean login(@RequestBody Map<String, Object> json) {
+		String username =  json.get("username").toString();
+		String password = json.get("password").toString();
+		Account account = accountRepository.getOne(username);
+		return account.checkPassword(password);
+	}
+
 	@GetMapping("/{username}")
-	public Account get(@PathVariable("username") String username) {
-		return accountRepository.getOne(username);
+	public String get(@PathVariable("username") String username) {
+		try {
+			return accountRepository.findById(username).get().getUserName();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "NOT FOUND!";
+		}
 	}
 }
