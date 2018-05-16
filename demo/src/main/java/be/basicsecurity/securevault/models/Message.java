@@ -32,16 +32,34 @@ public class Message {
 	private File encryptedDesKey; // Encrypted with public key of receiver.
 	
 	public Message (Account sender, Account receiver, File message) {
-		Random random = new Random();
-		String fileBase = Paths.get(System.getProperty("user.home"), "/messageCenter").toString();
-		encryptedMessage = new File(fileBase + "/" + random.nextLong() + ".message");
-		if(!encryptedMessage.getParentFile().exists()) {
-			encryptedMessage.getParentFile().mkdirs();
+		try {
+			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+			keyGenerator.initialize(128);
+			SecretKey secretKey = keyGenerator.genKey();
+
+			//Loading the RSA Private Key maar geen idee of dit niet eenvoudiger/makkelijker kan of nodig is
+			//byte[] iv = new byte[128/8];
+			//srandom.nextBytes(iv);
+			//IvParamterSpec ivspec = new IvParameterSpec(iv);
+
+			Random random = new Random();
+			String fileBase = Paths.get(System.getProperty("user.home"), "/messageCenter").toString();
+			encryptedMessage = new File(fileBase + "/" + random.nextLong() + ".message");
+			if (!encryptedMessage.getParentFile().exists()) {
+				encryptedMessage.getParentFile().mkdirs();
+			}
+			encryptedDesKey = new File(fileBase + "/" + random.nextLong() + ".key");
+
+			try (FileOutputStream out = new FileOutputStream(encryptedDesKey)) {
+				out.write(secretKey().getPrivate().getEncoded());
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		encryptedDesKey = new File(fileBase + "/" + random.nextLong() + ".key");
 	}
-	
-	
+
 	public long getId() {
 		return id;
 	}
