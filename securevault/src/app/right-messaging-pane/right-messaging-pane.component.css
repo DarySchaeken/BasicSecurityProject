@@ -86,13 +86,8 @@ img {
     border: solid 1px lightgrey;
     width: 100%;
     margin-top: 1%;
-    height: 70%;
+    height: 50px;
     float: right;
-}
-
-#sendingItem > p {
-    margin-left: 40%;
-    margin-right: 25%;
 }
 
 #sentImage {
