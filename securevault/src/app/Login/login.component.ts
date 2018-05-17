@@ -42,11 +42,11 @@ export class LoginComponent {
     }
 
     showNewUser(): void {
-      if (!this.checkIfUserExists) {
-        document.getElementById('newUser').style.visibility = 'visible';
-      } else {
-        document.getElementById('newUser').style.visibility = 'hidden';
-      }
+        if (!this.checkIfUserExists) {
+          document.getElementById('newUser').style.visibility = 'visible';
+        } else {
+          document.getElementById('newUser').style.visibility = 'hidden';
+        }
     }
 
     getUsers() {
