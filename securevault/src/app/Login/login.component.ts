@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.user = document.getElementById('username').textContent;
+        this.getUsers().subscribe(users => this.users = users as User[]);
     }
 
     onClick(): void {
@@ -58,7 +59,6 @@ export class LoginComponent implements OnInit {
     }
 
     checkIfUserExists(): boolean {
-      this.getUsers().subscribe(users => this.users = users as User[]);
       this.users.forEach(user => {
         if (user.userName === this.user) {
           return true;
