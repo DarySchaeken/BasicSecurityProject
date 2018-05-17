@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import { User } from '../../_models/user';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-logo',
@@ -24,7 +25,9 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.user = document.getElementById('username').textContent;
-        this.getUsers().subscribe(users => this.users = users as User[]);
+        this.getUsers().subscribe(users => {
+          this.users = users as User[];
+        });
     }
 
     onClick(): void {
@@ -54,7 +57,7 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    getUsers() {
+    getUsers(): Observable<User[]> {
       return this.http.get<User[]>(this.checkUserUrl);
     }
 
