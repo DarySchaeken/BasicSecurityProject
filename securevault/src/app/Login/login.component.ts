@@ -1,6 +1,8 @@
 import { Component, Renderer2 } from '@angular/core';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import { User } from '../../_models/user';
 
 @Component({
   selector: 'app-logo',
@@ -10,6 +12,12 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class LoginComponent {
 
+  private apiUrl: string = environment.apiUrl;
+  private users: User[];
+  private user;
+
+  private checkUserUrl = this.apiUrl + 'account/user';
+
     constructor(private renderer: Renderer2, private http: HttpClient) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
     }
@@ -17,24 +25,42 @@ export class LoginComponent {
     onClick(): void {
 
         if (document.getElementById('login').style.visibility !== 'visible') {
-            this.makeVisible();
+            this.makeLoginVisible();
         } else {
-            this.hide();
+            this.hideLogin();
         }
       }
 
-    makeVisible(): void {
+    makeLoginVisible(): void {
         const login = document.getElementById('login');
         login.style.visibility = 'visible';
     }
 
-    hide(): void {
+    hideLogin(): void {
         const login = document.getElementById('login');
         login.style.visibility = 'hidden';
     }
 
     // Is al voor in de toekomst als de back-end kan checken
     showNewUser(): void {
-      document.getElementById('newUser').style.visibility = 'visible';
+      if (!this.checkIfUserExists) {
+        document.getElementById('newUser').style.visibility = 'visible';
+      } else {
+        document.getElementById('newUser').style.visibility = 'hidden';
+      }
+    }
+
+    getUsers() {
+      return this.http.get<User[]>(this.checkUserUrl);
+    }
+
+    checkIfUserExists(): boolean {
+      this.getUsers().subscribe(users => this.users = users as User[]);
+      this.users.forEach(user => {
+        if (user.userName = this.user) {
+          return true;
+        }
+      });
+      return false;
     }
 }
