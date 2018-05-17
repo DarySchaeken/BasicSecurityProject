@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   private apiUrl: string = environment.apiUrl;
   private users: User[];
-  private user: string;
+  private userName: string;
 
   private checkUserUrl = this.apiUrl + 'account';
 
@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.user = document.getElementById('username').textContent;
         this.getUsers().subscribe(users => {
           this.users = users as User[];
         });
@@ -63,7 +62,7 @@ export class LoginComponent implements OnInit {
 
     checkIfUserExists(): boolean {
       this.users.forEach(user => {
-        if (user.userName === this.user) {
+        if (this.userName === user.userName) {
           return true;
         }
       });
