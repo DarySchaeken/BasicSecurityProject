@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, Renderer2, OnInit } from '@angular/core';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
@@ -10,16 +10,20 @@ import { User } from '../../_models/user';
   styleUrls: ['./login.component.css'],
 })
 @Injectable()
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   private apiUrl: string = environment.apiUrl;
   private users: User[];
-  private user = document.getElementById('username').textContent;
+  private user: string;
 
   private checkUserUrl = this.apiUrl + 'account/user';
 
     constructor(private renderer: Renderer2, private http: HttpClient) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
+    }
+
+    ngOnInit() {
+      this.user = document.getElementById('username').textContent;
     }
 
     onClick(): void {
