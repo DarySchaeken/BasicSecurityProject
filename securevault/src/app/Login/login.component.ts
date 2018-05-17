@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     }
 
     showNewUser(): void {
-        if (!this.checkIfUserExists) {
+        if (!this.checkIfUserExists()) {
           document.getElementById('newUser').style.visibility = 'visible';
         } else {
           document.getElementById('newUser').style.visibility = 'hidden';
