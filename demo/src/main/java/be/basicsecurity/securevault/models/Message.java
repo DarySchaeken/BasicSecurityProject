@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -50,7 +51,7 @@ public class Message {
 	@Lob
 	private File encryptedMessage;
 	@Lob
-	private File encryptedHash; // Encrypted with private key of sender.
+	private byte[] encryptedHash;
 
 	static private Base64.Encoder encoder = Base64.getEncoder();
 	static SecureRandom srandom = new SecureRandom();
@@ -76,6 +77,19 @@ public class Message {
 			KeyFactory kf = KeyFactory.getInstance("RSA");
 			PublicKey pub = kf.generatePublic(ks);
 
+			byte[] bytesPrivateKey = Files.readAllBytes(sender.getPrivateKey().toPath());
+			PKCS8EncodedKeySpec privks = new PKCS8EncodedKeySpec(bytesPrivateKey);
+			KeyFactory privkf = KeyFactory.getInstance("RSA");
+			PrivateKey pvt = privkf.generatePrivate(privks);
+
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+			messageDigest.update(Files.readAllBytes(message.toPath()));
+			byte[] signature = messageDigest.digest();
+
+			Cipher signCipher = Cipher.getInstance("RSA");
+			signCipher.init(Cipher.ENCRYPT_MODE, pvt);
+			encryptedHash = signCipher.doFinal(signature);
+
 			FileOutputStream outputStream = new FileOutputStream(encryptedMessage);
 			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, pub);
@@ -89,7 +103,6 @@ public class Message {
 			try (FileInputStream in = new FileInputStream(message)) {
 				processFile(ci, in, outputStream);
 			}
-
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -125,7 +138,7 @@ public class Message {
 		return encryptedMessage;
 	}
 
-	public File getEncryptedHash() {
+	public byte[] getEncryptedHash() {
 		return encryptedHash;
 	}
 
