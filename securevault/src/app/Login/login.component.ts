@@ -41,7 +41,6 @@ export class LoginComponent {
         login.style.visibility = 'hidden';
     }
 
-    // Is al voor in de toekomst als de back-end kan checken
     showNewUser(): void {
       if (!this.checkIfUserExists) {
         document.getElementById('newUser').style.visibility = 'visible';
