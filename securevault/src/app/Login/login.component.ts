@@ -16,14 +16,14 @@ export class LoginComponent implements OnInit {
   private users: User[];
   private user: string;
 
-  private checkUserUrl = this.apiUrl + 'account/user';
+  private checkUserUrl = this.apiUrl + 'account';
 
     constructor(private renderer: Renderer2, private http: HttpClient) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
     }
 
     ngOnInit() {
-      this.user = document.getElementById('username').textContent;
+        this.user = document.getElementById('username').textContent;
     }
 
     onClick(): void {
