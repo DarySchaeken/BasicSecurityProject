@@ -14,7 +14,7 @@ export class LoginComponent {
 
   private apiUrl: string = environment.apiUrl;
   private users: User[];
-  private user;
+  private user = document.getElementById('username').textContent;
 
   private checkUserUrl = this.apiUrl + 'account/user';
 
