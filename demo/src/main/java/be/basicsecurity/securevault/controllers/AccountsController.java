@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,14 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import be.basicsecurity.securevault.models.Account;
 import be.basicsecurity.securevault.repositories.AccountRepository;
 
 @RestController
-@RequestMapping("/account")
+@CrossOrigin
+@RequestMapping("/api/account")
 public class AccountsController {
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -47,6 +55,16 @@ public class AccountsController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "NOT FOUND!";
+		}
+	}
+	
+	@GetMapping
+	public String list() {
+		try {
+			return objectMapper.writeValueAsString(accountRepository.findAll());
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "No Accounts!";
 		}
 	}
 }

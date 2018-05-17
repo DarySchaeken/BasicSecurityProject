@@ -14,15 +14,23 @@ import javax.persistence.Lob;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+
 public class Account {
 	@Id
 	private String userName;
+	@JsonIgnore
 	private String hashedPassword;
+	@JsonIgnore
 	private String salt;
 	@Lob
+	@JsonIgnore
 	private File privateKey;
 	@Lob
+	@JsonIgnore
 	private File publicKey;
 
 	public Account() {}
