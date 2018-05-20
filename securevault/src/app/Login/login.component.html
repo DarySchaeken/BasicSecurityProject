@@ -7,7 +7,7 @@
     <table>
         <tr>
             <td><label>Username</label></td>
-            <td><input type="text" id="username" (blur)="showNewUser()" /></td>
+            <td><input type="text" id="username" (blur)="showNewUser()" [(ngModel)]="user" value=" " /></td>
         </tr>
         <tr>
             <td><label>Password</label></td>
