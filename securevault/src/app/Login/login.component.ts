@@ -14,9 +14,9 @@ import {timestamp} from "rxjs/operators/timestamp";
 @Injectable()
 export class LoginComponent implements OnInit {
 
-    private apiUrl: string = environment.apiUrl;
-    private users: User[];
-    private user: string;
+  private apiUrl: string = environment.apiUrl;
+  private users: User[];
+  private userName: string;
 
     private checkUserUrl = this.apiUrl + 'account';
 
@@ -62,15 +62,11 @@ export class LoginComponent implements OnInit {
     }
 
     checkIfUserExists(): boolean {
-        console.log(this.users);
-        console.log(this.user);
-        this.users.forEach(user => {
-            console.log(user.userName);
-            console.log(this.user == user.userName);
-            if (user.userName == this.user) {
-                return true;
-            }
-        });
-        return false;
+      this.users.forEach(user => {
+        if (this.userName === user.userName) {
+          return true;
+        }
+      });
+      return false;
     }
 }
