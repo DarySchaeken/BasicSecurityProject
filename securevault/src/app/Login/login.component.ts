@@ -1,14 +1,15 @@
-import { Component, Renderer2, OnInit } from '@angular/core';
+import {Component, Renderer2, OnInit} from '@angular/core';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import { User } from '../../_models/user';
-import { Observable } from 'rxjs/Observable';
+import {User} from '../../_models/user';
+import {Observable} from 'rxjs/Observable';
+import {timestamp} from "rxjs/operators/timestamp";
 
 @Component({
-  selector: 'app-logo',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-logo',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
 })
 @Injectable()
 export class LoginComponent implements OnInit {
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   private users: User[];
   private userName: string;
 
-  private checkUserUrl = this.apiUrl + 'account';
+    private checkUserUrl = this.apiUrl + 'account';
 
     constructor(private renderer: Renderer2, private http: HttpClient) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
@@ -25,8 +26,8 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.getUsers().subscribe(users => {
-          this.users = users as User[];
-        });
+            this.users = users;
+        },error => console.log(error));
     }
 
     onClick(): void {
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
         } else {
             this.hideLogin();
         }
-      }
+    }
 
     makeLoginVisible(): void {
         const login = document.getElementById('login');
@@ -50,14 +51,14 @@ export class LoginComponent implements OnInit {
 
     showNewUser(): void {
         if (!this.checkIfUserExists()) {
-          document.getElementById('newUser').style.visibility = 'visible';
+            document.getElementById('newUser').style.visibility = 'visible';
         } else {
-          document.getElementById('newUser').style.visibility = 'hidden';
+            document.getElementById('newUser').style.visibility = 'hidden';
         }
     }
 
     getUsers(): Observable<User[]> {
-      return this.http.get<User[]>(this.checkUserUrl);
+        return this.http.get<User[]>(this.checkUserUrl);
     }
 
     checkIfUserExists(): boolean {
