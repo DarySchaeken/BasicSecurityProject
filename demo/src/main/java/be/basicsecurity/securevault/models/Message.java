@@ -38,6 +38,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // SOURCES: http://www.novixys.com/blog/rsa-file-encryption-decryption-java/
 // SOURCES: http://www.novixys.com/blog/using-aes-rsa-file-encryption-decryption-java/
 
@@ -51,10 +53,13 @@ public class Message {
 	@ManyToOne
 	private Account receiver;
 	@Lob
+	@JsonIgnore
 	private File encryptedMessage;
 	@Lob
+	@JsonIgnore
 	private byte[] encryptedHash;
 	@Transient
+	@JsonIgnore
 	private byte[] signature;
 
 	static SecureRandom srandom = new SecureRandom();
