@@ -5,6 +5,7 @@ import {environment} from '../../environments/environment';
 import {User} from '../../_models/user';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-logo',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   private checkUserUrl = this.apiUrl + 'account';
   private creatUserUrl = this.apiUrl;
 
-    constructor(private renderer: Renderer2, private http: HttpClient, private router: Router) {
+    constructor(private renderer: Renderer2, private http: HttpClient, private router: Router, private cookie: CookieService) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
     }
 
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
         } else if (this.checkIfUserExists() && this.checkPassword()) {
+            this.cookie.set('username', this.userName.nativeElement.value);
             this.router.navigateByUrl('/message');
         } else if (this.confirmPassword.nativeElement.value !== '') {
             this.makeNewUser();
@@ -96,6 +98,7 @@ export class LoginComponent implements OnInit {
         if (this.password.nativeElement.value !== '' && this.confirmPassword.nativeElement.value !== ''
             && this.userName.nativeElement.value !== '') {
             if (this.confirmPassword.nativeElement.value.trim() === this.password.nativeElement.value.trim()) {
+                this.cookie.set('username', this.userName.nativeElement.value);
                 this.router.navigateByUrl('/message');
                 return this.http.put<User>(this.creatUserUrl, new User(this.userName.nativeElement.value,
                     this.password.nativeElement.value));

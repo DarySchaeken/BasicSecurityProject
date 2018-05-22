@@ -8,6 +8,7 @@ import { LeftMessagingPaneComponent } from './left-messaging-pane/left-messaging
 import {RouterModule} from '@angular/router';
 import { MessageContainerComponent } from './message-container/message-container.component';
 import { RightMessagingPaneComponent } from './right-messaging-pane/right-messaging-pane.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { RightMessagingPaneComponent } from './right-messaging-pane/right-messag
                 ]),
         HttpClientModule
     ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 
