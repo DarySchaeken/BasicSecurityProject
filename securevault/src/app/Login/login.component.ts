@@ -1,10 +1,10 @@
-import {Component, Renderer2, OnInit, ElementRef, ViewChild, AfterViewInit, Input} from '@angular/core';
+import {Component, Renderer2, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {User} from '../../_models/user';
 import {Observable} from 'rxjs/Observable';
-import {forEach} from "@angular/router/src/utils/collection";
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-logo',
@@ -12,21 +12,21 @@ import {forEach} from "@angular/router/src/utils/collection";
     styleUrls: ['./login.component.css'],
 })
 @Injectable()
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
 
   private apiUrl: string = environment.apiUrl;
   private users: User[];
   @ViewChild('login') login: ElementRef;
   @ViewChild('newUser') newUser: ElementRef;
   @ViewChild('userName') userName: ElementRef;
+  @ViewChild('password') password: ElementRef;
+  @ViewChild('confirmPassword') confirmPassword: ElementRef;
 
   private checkUserUrl = this.apiUrl + 'account';
+  private creatUserUrl = this.apiUrl;
 
-    constructor(private renderer: Renderer2, private http: HttpClient) {
+    constructor(private renderer: Renderer2, private http: HttpClient, private router: Router) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
-    }
-
-    ngAfterViewInit() {
     }
 
     ngOnInit() {
@@ -40,7 +40,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
         } else if (this.checkIfUserExists() && this.checkPassword()) {
-            alert('ok');
+            this.router.navigateByUrl('/message');
+        } else if (this.confirmPassword.nativeElement.value !== '') {
+            this.makeNewUser();
         } else {
             this.hideLogin();
         }
@@ -70,8 +72,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     checkIfUserExists(): boolean {
-        console.log('1');
-        for (let i = 0; i <= this.users.length; i++) {
+        for (let i = 0; i <= this.users.length - 1; i++) {
             if (this.userName.nativeElement.value.trim() === this.users[i].userName.trim()) {
                 return true;
             }
@@ -80,6 +81,27 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     checkPassword(): boolean {
-        return true;
+        if (this.userName.nativeElement.value !== null && this.password.nativeElement !== null) {
+            for (let i = 0; i <= this.users.length; i++) {
+                if (this.userName.nativeElement.value.trim() === this.users[i].userName.trim()
+                    && this.password.nativeElement.value.trim() === this.users[i].password.trim()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    makeNewUser(): Observable<User> {
+        if (this.password.nativeElement.value !== '' && this.confirmPassword.nativeElement.value !== ''
+            && this.userName.nativeElement.value !== '') {
+            if (this.confirmPassword.nativeElement.value.trim() === this.password.nativeElement.value.trim()) {
+                this.router.navigateByUrl('/message');
+                return this.http.put<User>(this.creatUserUrl, new User(this.userName.nativeElement.value,
+                    this.password.nativeElement.value));
+            } else {
+                alert('De opgegeven passwoorden komen zijn niet gelijk');
+            }
+        }
     }
 }

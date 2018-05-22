@@ -22,7 +22,7 @@ import { RightMessagingPaneComponent } from './right-messaging-pane/right-messag
         BrowserModule,
         RouterModule.forRoot([
                 { path: '', component: LoginComponent, pathMatch: 'full', data: { title: 'Securevault | Login' }},
-                { path: 'message', component: MessageContainerComponent , data: { title: 'Securevault | Message'} }
+                { path: 'message', component: MessageContainerComponent , data: { title: 'Securevault | Message'}}
                 ]),
         HttpClientModule
     ],
