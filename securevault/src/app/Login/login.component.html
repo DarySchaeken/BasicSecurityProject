@@ -1,19 +1,18 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <section id="logo" (click)="onClick()">
     <img src="../../assets/images/Logo%20project.png" alt="Logo">
     <p>Secure vault</p>
 </section>
-<form id="login" style="visibility: hidden">
+<form id="login" style="visibility: hidden" #login>
     <table>
         <tr>
             <td><label>Username</label></td>
-            <td><input type="text" id="username" (blur)="showNewUser()" [(ngModel)]="user" value=" " /></td>
+            <td><input type="text" id="username" (blur)="showNewUser()" value=" " /></td>
         </tr>
         <tr>
             <td><label>Password</label></td>
             <td><input type="password" id="password" /></td>
         </tr>
-        <tr id="newUser" style="visibility: hidden;">
+        <tr id="newUser" style="visibility: hidden;" #newUser>
             <td><label>Confirm password</label></td>
             <td><input type="password" id="confirmedPassword" /></td>
         </tr>

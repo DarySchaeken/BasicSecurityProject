@@ -1,10 +1,9 @@
-import {Component, Renderer2, OnInit} from '@angular/core';
+import {Component, Renderer2, OnInit, ElementRef, ViewChild, AfterViewInit, Input} from '@angular/core';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {User} from '../../_models/user';
 import {Observable} from 'rxjs/Observable';
-import {timestamp} from "rxjs/operators/timestamp";
 
 @Component({
     selector: 'app-logo',
@@ -12,16 +11,21 @@ import {timestamp} from "rxjs/operators/timestamp";
     styleUrls: ['./login.component.css'],
 })
 @Injectable()
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   private apiUrl: string = environment.apiUrl;
   private users: User[];
-  private userName: string;
+  @ViewChild('login') login: ElementRef;
+  @ViewChild('newUser') newUser: ElementRef;
+  @ViewChild('userName') userName: ElementRef;
 
-    private checkUserUrl = this.apiUrl + 'account';
+  private checkUserUrl = this.apiUrl + 'account';
 
     constructor(private renderer: Renderer2, private http: HttpClient) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
+    }
+
+    ngAfterViewInit() {
     }
 
     ngOnInit() {
@@ -30,9 +34,9 @@ export class LoginComponent implements OnInit {
         },error => console.log(error));
     }
 
-    onClick(): void {
 
-        if (document.getElementById('login').style.visibility !== 'visible') {
+    onClick(): void {
+        if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
         } else {
             this.hideLogin();
@@ -40,20 +44,18 @@ export class LoginComponent implements OnInit {
     }
 
     makeLoginVisible(): void {
-        const login = document.getElementById('login');
-        login.style.visibility = 'visible';
+        this.login.nativeElement.style.visibility = 'visible';
     }
 
     hideLogin(): void {
-        const login = document.getElementById('login');
-        login.style.visibility = 'hidden';
+        this.login.nativeElement.style.visibility = 'hidden';
     }
 
     showNewUser(): void {
         if (!this.checkIfUserExists()) {
-            document.getElementById('newUser').style.visibility = 'visible';
+            this.newUser.nativeElement.style.visibility = 'visible';
         } else {
-            document.getElementById('newUser').style.visibility = 'hidden';
+            this.newUser.nativeElement.style.visibility = 'hidden';
         }
     }
 
@@ -62,11 +64,11 @@ export class LoginComponent implements OnInit {
     }
 
     checkIfUserExists(): boolean {
-      this.users.forEach(user => {
-        if (this.userName === user.userName) {
-          return true;
-        }
-      });
-      return false;
+        this.users.forEach(user => {
+            if (this.userName.nativeElement.textContent === user.userName) {
+                return true;
+            }
+        });
+        return false;
     }
 }
