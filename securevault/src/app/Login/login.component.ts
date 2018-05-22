@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {User} from '../../_models/user';
 import {Observable} from 'rxjs/Observable';
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-logo',
@@ -31,13 +32,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.getUsers().subscribe(users => {
             this.users = users;
-        },error => console.log(error));
+        }, error => console.log(error));
     }
 
 
     onClick(): void {
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
+        } else if (this.checkIfUserExists() && this.checkPassword()) {
+            alert('ok');
         } else {
             this.hideLogin();
         }
@@ -49,13 +52,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     hideLogin(): void {
         this.login.nativeElement.style.visibility = 'hidden';
+        this.newUser.nativeElement.style.visibility = 'hidden';
     }
 
     showNewUser(): void {
-        if (!this.checkIfUserExists()) {
-            this.newUser.nativeElement.style.visibility = 'visible';
-        } else {
+        if (this.checkIfUserExists()) {
+            console.log(true);
             this.newUser.nativeElement.style.visibility = 'hidden';
+        } else {
+            console.log(false);
+            this.newUser.nativeElement.style.visibility = 'visible';
         }
     }
 
@@ -64,11 +70,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     checkIfUserExists(): boolean {
-        this.users.forEach(user => {
-            if (this.userName.nativeElement.textContent === user.userName) {
+        console.log('1');
+        for (let i = 0; i <= this.users.length; i++) {
+            if (this.userName.nativeElement.value.trim() === this.users[i].userName.trim()) {
                 return true;
             }
-        });
+        }
         return false;
+    }
+
+    checkPassword(): boolean {
+        return true;
     }
 }
