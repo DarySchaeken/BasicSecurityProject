@@ -26,10 +26,10 @@
                     <img src="../../assets/images/link.png" alt="link" id="linkImage">
                 </td>
                 <td>
-                    <input type="file" id="sendingItem">
+                    <input type="file" id="sendingItem" (change)="selectedFileChanged($event)">
                 </td>
                 <td>
-                    <img src="../../assets/images/sent.png" alt="sent" id="sentImage">
+                    <img src="../../assets/images/sent.png" alt="sent" id="sentImage" (click)="sendFile()">
                 </td>
             </tr>
         </table>
