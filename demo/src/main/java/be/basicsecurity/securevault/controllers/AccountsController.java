@@ -31,12 +31,12 @@ public class AccountsController {
 	
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String create(@RequestBody Map<String, Object> json) {
+	public boolean create(@RequestBody Map<String, Object> json) {
 		String username =  json.get("username").toString();
 		String password = json.get("password").toString();
 		Account account = new Account(username, password);
 		accountRepository.save(account);
-		return "Created";
+		return true;
 	}
 	
 	@PostMapping("/login")
@@ -49,12 +49,13 @@ public class AccountsController {
 	}
 
 	@GetMapping("/{username}")
-	public String get(@PathVariable("username") String username) {
+	public boolean get(@PathVariable("username") String username) {
 		try {
-			return accountRepository.findById(username).get().getUserName();
+			accountRepository.findById(username).get().getUserName();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "NOT FOUND!";
+			return false;
 		}
 	}
 	
