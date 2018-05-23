@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {Message} from '../../_models/message';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-right-messaging-pane',
@@ -22,7 +23,9 @@ export class RightMessagingPaneComponent implements OnInit {
 
     ngOnInit() {
         this.currentUserName = this.cookie.get('username');
-        this.getMessages();
+        this.getMessages().subscribe( message => {
+            this.messages = message as Message[];
+        });
     }
 
     selectedFileChanged(event) {
@@ -54,8 +57,6 @@ export class RightMessagingPaneComponent implements OnInit {
     }
 
     getMessages() {
-        return this.http.get(this.messagesUrl).map((message: Message[]) => {
-            this.messages = <Message[]> message;
-        });
+        return this.http.get(this.messagesUrl);
     }
 }
