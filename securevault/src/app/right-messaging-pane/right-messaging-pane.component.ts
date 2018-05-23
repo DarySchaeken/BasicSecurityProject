@@ -37,7 +37,7 @@ export class RightMessagingPaneComponent implements OnInit {
         const formData = new FormData();
       formData.append( this.selectedFile.name, this.selectedFile);
       formData.append('sender', this.currentUserName);
-      formData.append('reciever', user);
+      formData.append('receiver', user);
       this.http.post(this.fileUploadUrl, formData).subscribe(res => {
         console.log(res);
       });
