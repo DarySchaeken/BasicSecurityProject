@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/Observable';
@@ -18,14 +18,13 @@ export class RightMessagingPaneComponent implements OnInit {
     private messagesUrl = environment.apiUrl + 'message';
     public currentUserName;
     public messages: Message[];
+    @ViewChild('message') message: ElementRef;
 
     constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {}
 
     ngOnInit() {
         this.currentUserName = this.cookie.get('username');
-        this.getMessages().subscribe(message => {
-            this.messages = message['message'];
-        });
+        this.showMessages();
     }
 
     selectedFileChanged(event) {
@@ -55,6 +54,14 @@ export class RightMessagingPaneComponent implements OnInit {
         const downloadUrl = this.messagesUrl + '/?id=' + id;
         window.open(downloadUrl);
     }
+
+    showMessages(): void {
+    this.getMessages().subscribe(message => {
+        for (let i = 0; message.length - 1; i++) {
+            this.messages[i] = new Message(message[i].id, message[i].filename, message[i].sender);
+        }
+});
+}
 
     getMessages(): Observable<Message[]> {
         return this.http.get<Message[]>(this.messagesUrl);
