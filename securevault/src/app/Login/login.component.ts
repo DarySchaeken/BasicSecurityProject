@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
 
 
     onClick(): void {
+        this.checkPassword();
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
         } else if (this.userNameCheck && this.passwordCheck) {
