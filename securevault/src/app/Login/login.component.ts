@@ -100,14 +100,16 @@ export class LoginComponent implements OnInit {
         return false;
     }
 
-    makeNewUser(): Observable<User> {
+    makeNewUser() {
         if (this.password.nativeElement.value !== '' && this.confirmPassword.nativeElement.value !== ''
             && this.userName.nativeElement.value !== '') {
             if (this.confirmPassword.nativeElement.value.trim() === this.password.nativeElement.value.trim()) {
                 this.cookie.set('username', this.userName.nativeElement.value.trim());
                 this.router.navigateByUrl('/message');
-                return this.http.put<User>(this.creatUserUrl, new User(this.userName.nativeElement.value.trim(),
-                    this.password.nativeElement.value.trim()));
+                return this.http.post<User>(this.creatUserUrl, new User(this.userName.nativeElement.value.trim(),
+                    this.password.nativeElement.value.trim())).subscribe(result => {
+                        console.log(result);
+                    });
             } else {
                 alert('De opgegeven passwoorden komen zijn niet gelijk');
             }
