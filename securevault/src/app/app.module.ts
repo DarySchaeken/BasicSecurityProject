@@ -4,7 +4,6 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { LoginComponent } from './Login/login.component';
 import { AppComponent } from './app.component';
-import { LeftMessagingPaneComponent } from './left-messaging-pane/left-messaging-pane.component';
 import {RouterModule} from '@angular/router';
 import { MessageContainerComponent } from './message-container/message-container.component';
 import { RightMessagingPaneComponent } from './right-messaging-pane/right-messaging-pane.component';
@@ -15,7 +14,6 @@ import { CookieService } from 'ngx-cookie-service';
     declarations: [
         LoginComponent,
         AppComponent,
-        LeftMessagingPaneComponent,
         MessageContainerComponent,
         RightMessagingPaneComponent
   ],

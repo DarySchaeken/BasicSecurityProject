@@ -1,7 +1,7 @@
 #right-pane {
     float: right;
     height: 100%;
-    width: 74.9%;
+    width: 100%;
     border-left: 1px solid #66ccff;
 }
 #header {
@@ -23,6 +23,7 @@
     height: 80%;
     width: 100%;
     border-bottom: 1px solid #66ccff;
+    overflow-y: auto;
 }
 
 .message {
@@ -36,9 +37,6 @@
     max-width: 50%;
     word-wrap: break-word;
     z-index: -1;
-}
-
-.message.recieved {
     border: solid 1px lightgrey;
     border-radius: 5px;
     float: left;
@@ -72,7 +70,7 @@ td:nth-child(odd) {
 
 img {
     height: 70%;
-    width: 30%;
+    width: 25%;
 }
 
 #linkImage {

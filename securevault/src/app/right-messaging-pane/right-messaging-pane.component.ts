@@ -14,9 +14,8 @@ export class RightMessagingPaneComponent implements OnInit {
     private selectedFile: File = null;
     private fileUploadUrl = environment.apiUrl + 'sendMessage';
     private messagesUrl = environment.apiUrl;
-    private messages: Message[];
-    private currentUserName;
-    private myMessages: Message[];
+    public messages: Message[];
+    public currentUserName;
 
     constructor(private http: HttpClient, private cookie: CookieService) {}
 
@@ -26,7 +25,6 @@ export class RightMessagingPaneComponent implements OnInit {
         });
         this.currentUserName = this.cookie.get('username');
         this.cookie.delete('username');
-        this.myMessages = this.getSendMessages();
     }
 
     selectedFileChanged(event) {
@@ -54,9 +52,5 @@ export class RightMessagingPaneComponent implements OnInit {
 
     getMessages(): Observable<Message[]> {
         return this.http.get<Message[]>(this.messagesUrl);
-    }
-
-    getSendMessages(): Message[] {
-        return this.messages.filter(message => message.sender === this.currentUserName);
     }
 }
