@@ -33,8 +33,11 @@ export class RightMessagingPaneComponent implements OnInit {
 
     sendFile() {
       // Voor Formdata
-      const formData = new FormData();
-      formData.append('upload', this.selectedFile, this.selectedFile.name);
+        const user = prompt('Naar wie wilt u dit bericht verzenden?', 'Dary');
+        const formData = new FormData();
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+      formData.append('sender', this.currentUserName);
+      formData.append('reciever', user);
       this.http.post(this.fileUploadUrl, formData).subscribe(res => {
         console.log(res);
       });
