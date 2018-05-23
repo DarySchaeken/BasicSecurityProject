@@ -17,11 +17,15 @@ export class RightMessagingPaneComponent implements OnInit {
     private fileUploadUrl = environment.apiUrl + 'message/sendMessage';
     private messagesUrl = environment.apiUrl + 'message';
     public currentUserName;
+    public messages: Message[];
 
     constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {}
 
     ngOnInit() {
         this.currentUserName = this.cookie.get('username');
+        this.getMessages().subscribe(message => {
+            this.messages = message['message'];
+        });
     }
 
     selectedFileChanged(event) {
