@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <td><label>Password</label></td>
-            <td><input type="password" id="password" #password/></td>
+            <td><input type="password" id="password" #password (blur)="checkPassword()"/></td>
         </tr>
         <tr id="newUser" style="visibility: hidden;" #newUser>
             <td><label>Confirm password</label></td>
