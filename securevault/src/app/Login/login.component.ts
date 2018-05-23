@@ -62,18 +62,15 @@ export class LoginComponent implements OnInit {
     }
 
     showNewUser(): void {
-        let check: boolean;
-
         this.checkIfUserExists().subscribe(result => {
-            check = result as boolean;
+            if (result) {
+                console.log(true);
+                this.newUser.nativeElement.style.visibility = 'hidden';
+            } else {
+                console.log(false);
+                this.newUser.nativeElement.style.visibility = 'visible';
+            }
         });
-        if (check) {
-            console.log(true);
-            this.newUser.nativeElement.style.visibility = 'hidden';
-        } else {
-            console.log(false);
-            this.newUser.nativeElement.style.visibility = 'visible';
-        }
     }
 
     getUsers(): Observable<User[]> {
