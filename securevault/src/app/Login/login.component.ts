@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   private getUserUrl = this.apiUrl + 'account';
   private checkUserUrl = this.apiUrl + 'account/';
   private checkPasswordUrl = this.apiUrl + 'account/login';
-  private creatUserUrl = this.apiUrl;
+  private creatUserUrl = this.apiUrl + 'account/register';
 
     constructor(private renderer: Renderer2, private http: HttpClient, private router: Router, private cookie: CookieService) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
