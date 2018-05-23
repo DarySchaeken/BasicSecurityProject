@@ -53,6 +53,8 @@ export class RightMessagingPaneComponent implements OnInit {
     }
 
     getMessages() {
-        return this.http.get(this.messagesUrl).subscribe();
+        return this.http.get(this.messagesUrl).subscribe(message => {
+            console.log(message);
+        });
     }
 }
