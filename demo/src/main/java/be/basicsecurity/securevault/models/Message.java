@@ -20,8 +20,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
-import java.util.Random;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -50,7 +48,9 @@ public class Message {
 	private long id;
 	@ManyToOne
 	private Account sender;
+	private String subject;
 	@ManyToOne
+	@JsonIgnore
 	private Account receiver;
 	@Lob
 	@JsonIgnore
@@ -147,9 +147,10 @@ public class Message {
 			srandom.nextBytes(iv);
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 
-			Random random = new Random();
+			//Random random = new Random();
+			subject = message.getName();
 			String fileBase = Paths.get(System.getProperty("user.home"), "/messageCenter").toString();
-			encryptedMessage = new File(fileBase + "/" + random.nextLong() + ".message");
+			encryptedMessage = new File(fileBase + "/" + subject + ".message");
 			if (!encryptedMessage.getParentFile().exists()) {
 				encryptedMessage.getParentFile().mkdirs();
 			}
@@ -202,6 +203,8 @@ public class Message {
 			e.printStackTrace();
 		}
 	}
+	
+	public Message() {}
 
 	public long getId() {
 		return id;
@@ -221,6 +224,10 @@ public class Message {
 
 	public byte[] getEncryptedHash() {
 		return encryptedHash;
+	}
+
+	public String getSubject() {
+		return subject;
 	}
 
 	static private void processFile(Cipher ci, InputStream in, OutputStream out)
