@@ -13,7 +13,7 @@ import {CookieService} from 'ngx-cookie-service';
 export class RightMessagingPaneComponent implements OnInit {
     private selectedFile: File = null;
     private fileUploadUrl = environment.apiUrl + 'sendMessage';
-    private messagesUrl = environment.apiUrl;
+    private messagesUrl = environment.apiUrl + 'message';
     public messages: Message[];
     public currentUserName;
 
