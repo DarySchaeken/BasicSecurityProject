@@ -76,8 +76,7 @@ export class LoginComponent implements OnInit {
     }
 
     checkIfUserExists(): Observable<boolean> {
-        this.checkUserUrl += this.userName.nativeElement.value.trim()
-       return this.http.get<boolean>(this.checkUserUrl);
+       return this.http.get<boolean>(this.checkUserUrl + this.userName.nativeElement.value.trim());
     }
 
     checkPassword(): boolean {
