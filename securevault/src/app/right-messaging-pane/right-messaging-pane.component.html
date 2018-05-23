@@ -5,7 +5,7 @@
 
     <section id="messages">
         <section *ngFor="let message of messages" [class.message.sent]="message.sender === currentUserName" (click)="downloadFile(message.id)">
-                {{message.file.name}}
+                {{message.filename}}
         </section>
     </section>
 

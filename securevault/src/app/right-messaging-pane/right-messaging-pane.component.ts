@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/Observable';
 import {Message} from '../../_models/message';
 import {CookieService} from 'ngx-cookie-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-right-messaging-pane',
@@ -17,7 +18,7 @@ export class RightMessagingPaneComponent implements OnInit {
     public messages: Message[];
     public currentUserName;
 
-    constructor(private http: HttpClient, private cookie: CookieService) {}
+    constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {}
 
     ngOnInit() {
         this.getMessages().subscribe(message => {
@@ -41,6 +42,7 @@ export class RightMessagingPaneComponent implements OnInit {
       this.http.post(this.fileUploadUrl, formData).subscribe(res => {
         console.log(res);
       });
+      this.router.navigateByUrl('/message');
       /* Voor binary input als back-end dat toelaat
         this.http.post(this.fileUploadUrl, this.selectedFile).subscribe(res => {
             console.log(res);

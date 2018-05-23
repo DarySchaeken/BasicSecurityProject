@@ -1,7 +1,7 @@
 export class Message {
     constructor(
         public id: number,
-        public file: File,
+        public filename: string,
         public sender: string
     ) {}
 }
