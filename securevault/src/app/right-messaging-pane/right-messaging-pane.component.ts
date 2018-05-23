@@ -24,7 +24,6 @@ export class RightMessagingPaneComponent implements OnInit {
             this.messages = message;
         });
         this.currentUserName = this.cookie.get('username');
-        this.cookie.delete('username');
     }
 
     selectedFileChanged(event) {

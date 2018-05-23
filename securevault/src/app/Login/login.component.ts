@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   private creatUserUrl = this.apiUrl + 'account/register';
   private userNameCheck = false;
   private passwordCheck = false;
+  private now = Date.now();
 
     constructor(private renderer: Renderer2, private http: HttpClient, private router: Router, private cookie: CookieService) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
         } else if (this.userNameCheck && this.passwordCheck) {
-            this.cookie.set('username', this.userName.nativeElement.value.trim());
+            this.cookie.set('username', this.userName.nativeElement.value.trim(), this.now + 1);
             this.router.navigateByUrl('/message');
         } else if (this.confirmPassword.nativeElement.value !== '') {
             this.makeNewUser();
