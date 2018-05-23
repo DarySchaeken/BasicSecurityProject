@@ -23,9 +23,9 @@ export class LoginComponent implements OnInit {
   @ViewChild('password') password: ElementRef;
   @ViewChild('confirmPassword') confirmPassword: ElementRef;
 
-  private getUserUrl = this.apiUrl + '/account';
-  private checkUserUrl = this.apiUrl + '/account/';
-  private checkPasswordUrl = this.apiUrl + '/account/login';
+  private getUserUrl = this.apiUrl + 'account';
+  private checkUserUrl = this.apiUrl + 'account/';
+  private checkPasswordUrl = this.apiUrl + 'account/login';
   private creatUserUrl = this.apiUrl;
 
     constructor(private renderer: Renderer2, private http: HttpClient, private router: Router, private cookie: CookieService) {
