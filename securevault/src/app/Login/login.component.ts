@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
   @ViewChild('password') password: ElementRef;
   @ViewChild('confirmPassword') confirmPassword: ElementRef;
 
-  private checkUserUrl = this.apiUrl + 'account';
+  private checkUserUrl = this.apiUrl + '/account/' + this.userName.nativeElement.value;
+  private checkPasswordUrl = this.apiUrl + '/account/login';
   private creatUserUrl = this.apiUrl;
 
     constructor(private renderer: Renderer2, private http: HttpClient, private router: Router, private cookie: CookieService) {
@@ -73,24 +74,17 @@ export class LoginComponent implements OnInit {
         return this.http.get<User[]>(this.checkUserUrl);
     }
 
-    checkIfUserExists(): boolean {
-        for (let i = 0; i <= this.users.length - 1; i++) {
-            if (this.userName.nativeElement.value.trim() === this.users[i].userName.trim()) {
-                return true;
-            }
-        }
-        return false;
+    checkIfUserExists(): Observable<boolean> {
+       return this.http.get<boolean>(this.checkUserUrl);
     }
 
     checkPassword(): boolean {
-        if (this.userName.nativeElement.value !== null && this.password.nativeElement !== null) {
-            for (let i = 0; i <= this.users.length; i++) {
-                if (this.userName.nativeElement.value.trim() === this.users[i].userName.trim()
-                    && this.password.nativeElement.value.trim() === this.users[i].password.trim()) {
-                    return true;
-                }
+        this.http.post<User>(this.checkPasswordUrl, new User(this.userName.nativeElement.value,
+            this.password.nativeElement.value)).subscribe(result => {
+            if (result.userName === this.userName.nativeElement.value) {
+                return true;
             }
-        }
+        });
         return false;
     }
 
