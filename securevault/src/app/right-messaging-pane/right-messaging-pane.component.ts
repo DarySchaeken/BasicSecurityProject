@@ -21,10 +21,8 @@ export class RightMessagingPaneComponent implements OnInit {
     constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {}
 
     ngOnInit() {
-        this.getMessages().subscribe(message => {
-            this.messages = message;
-        });
         this.currentUserName = this.cookie.get('username');
+        this.getMessages();
     }
 
     selectedFileChanged(event) {
@@ -55,7 +53,9 @@ export class RightMessagingPaneComponent implements OnInit {
         window.open(downloadUrl);
     }
 
-    getMessages(): Observable<Message[]> {
-        return this.http.get<Message[]>(this.messagesUrl);
+    getMessages() {
+        return this.http.get(this.messagesUrl).map((message: Message[]) => {
+            this.messages = <Message[]> message;
+        });
     }
 }
