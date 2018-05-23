@@ -4,7 +4,7 @@
     </section>
 
     <section id="messages">
-        <section *ngFor="let message of messages" [class.message.sent]="message.sender === currentUserName" (click)="downloadFile(message.id)">
+        <section *ngFor="let message of getMessages()" [class.message.sent]="message.sender === currentUserName" (click)="downloadFile(message.id)">
                 {{message.filename}}
         </section>
     </section>

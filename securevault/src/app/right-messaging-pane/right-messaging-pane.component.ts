@@ -16,16 +16,12 @@ export class RightMessagingPaneComponent implements OnInit {
     private selectedFile: File = null;
     private fileUploadUrl = environment.apiUrl + 'message/sendMessage';
     private messagesUrl = environment.apiUrl + 'message';
-    public messages: Message[];
     public currentUserName;
 
     constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {}
 
     ngOnInit() {
         this.currentUserName = this.cookie.get('username');
-        this.getMessages().subscribe( message => {
-            this.messages = message as Message[];
-        });
     }
 
     selectedFileChanged(event) {
@@ -57,6 +53,6 @@ export class RightMessagingPaneComponent implements OnInit {
     }
 
     getMessages() {
-        return this.http.get(this.messagesUrl);
+        return this.http.get(this.messagesUrl).subscribe();
     }
 }
