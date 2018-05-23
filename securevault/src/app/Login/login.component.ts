@@ -62,7 +62,12 @@ export class LoginComponent implements OnInit {
     }
 
     showNewUser(): void {
-        if (this.checkIfUserExists()) {
+        let check: boolean;
+
+        this.checkIfUserExists().subscribe(result => {
+            check = result as boolean;
+        });
+        if (check) {
             console.log(true);
             this.newUser.nativeElement.style.visibility = 'hidden';
         } else {
