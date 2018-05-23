@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
   @ViewChild('password') password: ElementRef;
   @ViewChild('confirmPassword') confirmPassword: ElementRef;
 
-  private checkUserUrl = this.apiUrl + '/account/' + this.userName.nativeElement.value;
+  private getUserUrl = this.apiUrl + '/account';
+  private checkUserUrl = this.apiUrl + '/account/';
   private checkPasswordUrl = this.apiUrl + '/account/login';
   private creatUserUrl = this.apiUrl;
 
@@ -71,11 +72,11 @@ export class LoginComponent implements OnInit {
     }
 
     getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(this.checkUserUrl);
+        return this.http.get<User[]>(this.getUserUrl);
     }
 
     checkIfUserExists(): Observable<boolean> {
-       return this.http.get<boolean>(this.checkUserUrl);
+       return this.http.get<boolean>(this.checkUserUrl + this.userName.nativeElement.value);
     }
 
     checkPassword(): boolean {
