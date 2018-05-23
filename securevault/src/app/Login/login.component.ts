@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
         } else if (this.checkIfUserExists() && this.checkPassword()) {
-            this.cookie.set('username', this.userName.nativeElement.value);
+            this.cookie.set('username', this.userName.nativeElement.value.trim());
             this.router.navigateByUrl('/message');
         } else if (this.confirmPassword.nativeElement.value !== '') {
             this.makeNewUser();
@@ -76,12 +76,12 @@ export class LoginComponent implements OnInit {
     }
 
     checkIfUserExists(): Observable<boolean> {
-       return this.http.get<boolean>(this.checkUserUrl + this.userName.nativeElement.value);
+       return this.http.get<boolean>(this.checkUserUrl + this.userName.nativeElement.value.trim());
     }
 
     checkPassword(): boolean {
-        this.http.post<User>(this.checkPasswordUrl, new User(this.userName.nativeElement.value,
-            this.password.nativeElement.value)).subscribe(result => {
+        this.http.post<User>(this.checkPasswordUrl, new User(this.userName.nativeElement.value.trim(),
+            this.password.nativeElement.value.trim())).subscribe(result => {
             if (result.userName === this.userName.nativeElement.value) {
                 return true;
             }
@@ -93,10 +93,10 @@ export class LoginComponent implements OnInit {
         if (this.password.nativeElement.value !== '' && this.confirmPassword.nativeElement.value !== ''
             && this.userName.nativeElement.value !== '') {
             if (this.confirmPassword.nativeElement.value.trim() === this.password.nativeElement.value.trim()) {
-                this.cookie.set('username', this.userName.nativeElement.value);
+                this.cookie.set('username', this.userName.nativeElement.value.trim());
                 this.router.navigateByUrl('/message');
-                return this.http.put<User>(this.creatUserUrl, new User(this.userName.nativeElement.value,
-                    this.password.nativeElement.value));
+                return this.http.put<User>(this.creatUserUrl, new User(this.userName.nativeElement.value.trim(),
+                    this.password.nativeElement.value.trim()));
             } else {
                 alert('De opgegeven passwoorden komen zijn niet gelijk');
             }
