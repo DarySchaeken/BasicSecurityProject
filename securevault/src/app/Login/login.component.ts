@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
     checkPassword(): boolean {
         this.http.post<User>(this.checkPasswordUrl, new User(this.userName.nativeElement.value.trim(),
             this.password.nativeElement.value.trim())).subscribe(result => {
-            if (result.userName === this.userName.nativeElement.value) {
+            if (result.userName === this.userName.nativeElement.value.trim()) {
                 return true;
             }
         });
