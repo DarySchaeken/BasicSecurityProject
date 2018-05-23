@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URLConnection;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +46,18 @@ public class MessagesController {
 	@PostMapping("/sendMessage")
 	@ResponseStatus(HttpStatus.CREATED)
 	public String create(@RequestParam("file") MultipartFile file, @RequestParam("sender") String sender,
-			@RequestParam("receiver") String receiver) {
+			@RequestParam("receiver") String receiver, @RequestParam("subject") String subject) {
 		if (!file.isEmpty()) {
 			try {
-				String name = "temp";
+				System.out.println(sender);
+				System.out.println(receiver);
+				int endIndex = subject.length();
+				if(subject.indexOf(".") != -1) {
+					endIndex = subject.indexOf(".");
+				}
+				String name = String.format("Sender%sSubject%s",sender,subject.substring(0, endIndex));
 				byte[] bytes = file.getBytes();
-
+				
 				String rootPath = System.getProperty("user.home");
 
 				File dir = new File(rootPath + File.separator + "tempFiles");
@@ -70,6 +74,7 @@ public class MessagesController {
 				messageRepository.save(message);
 				return "Message sent!";
 			} catch (Exception e) {
+				e.printStackTrace();
 				return "You failed to upload";
 			}
 		} else {
@@ -101,12 +106,11 @@ public class MessagesController {
 			e.printStackTrace();
 		}
 	}
-
-	@GetMapping("/{username}")
-	public String list(@PathVariable("username") String username) {
+	
+	@GetMapping
+	public String list() {
 		try {
-			return objectMapper.writeValueAsString(messageRepository.findAll().stream()
-					.filter(m -> m.getReceiver().getUserName().equals(username)).collect(Collectors.toList()));
+			return objectMapper.writeValueAsString(messageRepository.findAll());
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			return "No Messages!";
