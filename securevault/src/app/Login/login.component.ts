@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   private checkUserUrl = this.apiUrl + 'account/';
   private checkPasswordUrl = this.apiUrl + 'account/login';
   private creatUserUrl = this.apiUrl + 'account/register';
+  private userNameCheck = false;
 
     constructor(private renderer: Renderer2, private http: HttpClient, private router: Router, private cookie: CookieService) {
         this.renderer.setStyle(document.body, 'background-color', '#66ccff');
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
     onClick(): void {
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
-        } else if (this.checkIfUsernameIsValid() && this.checkPassword()) {
+        } else if (this.userNameCheck && this.checkPassword()) {
             this.cookie.set('username', this.userName.nativeElement.value.trim());
             this.router.navigateByUrl('/message');
         } else if (this.confirmPassword.nativeElement.value !== '') {
@@ -71,12 +72,13 @@ export class LoginComponent implements OnInit {
                 this.newUser.nativeElement.style.visibility = 'visible';
             }
         });
+        this.checkIfUsernameIsValid();
     }
 
     checkIfUsernameIsValid(): boolean {
         this.checkIfUserExists().subscribe(result => {
             if (result) {
-                return true;
+                return this.userNameCheck = true;
             }
         });
         return false;
