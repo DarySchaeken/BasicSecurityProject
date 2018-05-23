@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     onClick(): void {
         if (this.login.nativeElement.style.visibility !== 'visible') {
             this.makeLoginVisible();
-        } else if (this.checkIfUserExists() && this.checkPassword()) {
+        } else if (this.checkIfUsernameIsValid() && this.checkPassword()) {
             this.cookie.set('username', this.userName.nativeElement.value.trim());
             this.router.navigateByUrl('/message');
         } else if (this.confirmPassword.nativeElement.value !== '') {
@@ -71,6 +71,15 @@ export class LoginComponent implements OnInit {
                 this.newUser.nativeElement.style.visibility = 'visible';
             }
         });
+    }
+
+    checkIfUsernameIsValid(): boolean {
+        this.checkIfUserExists().subscribe(result => {
+            if (result) {
+                return true;
+            }
+        });
+        return false;
     }
 
     getUsers(): Observable<User[]> {
