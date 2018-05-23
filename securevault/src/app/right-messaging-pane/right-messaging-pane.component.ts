@@ -52,9 +52,7 @@ export class RightMessagingPaneComponent implements OnInit {
         window.open(downloadUrl);
     }
 
-    getMessages() {
-        return this.http.get(this.messagesUrl).subscribe(message => {
-            console.log(message);
-        });
+    getMessages(): Observable<Message[]> {
+        return this.http.get<Message[]>(this.messagesUrl);
     }
 }
