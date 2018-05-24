@@ -42,7 +42,7 @@
     background-color: #F2F2F2;
 }
 
-#messages > section > a {
+#messages > section > p {
     color: #000;
 }
 
@@ -53,7 +53,7 @@
     float: right;
 }
 
-#messages > section.sent > a {
+#messages > section.sent > p {
     color: white;
 }
 

@@ -53,14 +53,14 @@ export class RightMessagingPaneComponent implements OnInit {
     }
 
     downloadFile(id) {
-        const downloadUrl = this.messagesUrl + '/' + id;
+        let downloadUrl = this.messagesUrl + '/' + id;
         window.open(downloadUrl);
     }
 
     showMessages(): void {
       this.getMessages().subscribe(message => {
-          for(let i=0; i<message.length;i++) {
-              this.messages.push(new Message(message[i]["id"],message[i]["subject"],message[i]["sender"]["userName"]));
+          for (let i = 0; i < message.length;i++) {
+              this.messages.push(new Message(message[i]['id'], message[i]['subject'], message[i]['sender']['userName']));
           }
     });
 }
