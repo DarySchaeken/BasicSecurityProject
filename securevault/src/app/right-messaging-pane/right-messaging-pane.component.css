@@ -26,7 +26,7 @@
     overflow-y: auto;
 }
 
-.message {
+#messages > section {
     color: #000;
     clear: both;
     line-height: 18px;
@@ -43,7 +43,7 @@
     background-color: #F2F2F2;
 }
 
-.message.sent {
+#messages > section.sent {
     border: solid 1px cornflowerblue;
     border-radius: 5px;
     background-color: #66ccff;
@@ -90,4 +90,8 @@ img {
 
 #sentImage {
     float: right;
+}
+
+a {
+    text-decoration: none;
 }

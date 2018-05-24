@@ -4,7 +4,7 @@
     </section>
 
     <section id="messages">
-        <section *ngFor="let messageBubble of messages" [class.message.sent]="messageBubble.sender === currentUserName" [class.message]="messageBubble.sender !== currentUserName" (click)="downloadFile(messageBubble.id)">
+        <section *ngFor="let messageBubble of messages" [class.sent]="messageBubble.sender === currentUserName" (click)="downloadFile(messageBubble.id)">
                <a href="https://localhost:8443/api/message/{{messageBubble.id}}">{{messageBubble.filename}}</a>
         </section>
     </section>
