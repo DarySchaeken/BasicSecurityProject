@@ -6,6 +6,7 @@ import {Message} from '../../_models/message';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-right-messaging-pane',
@@ -24,7 +25,9 @@ export class RightMessagingPaneComponent implements OnInit {
 
     ngOnInit() {
         this.currentUserName = this.cookie.get('username');
+        this.messages = new Array<Message>();
         this.showMessages();
+        console.log(this.messages);
     }
 
     selectedFileChanged(event) {
@@ -51,16 +54,16 @@ export class RightMessagingPaneComponent implements OnInit {
     }
 
     downloadFile(id) {
-        const downloadUrl = this.messagesUrl + '/?id=' + id;
+        const downloadUrl = this.messagesUrl + '/' + id;
         window.open(downloadUrl);
     }
 
     showMessages(): void {
-    this.getMessages().subscribe(message => {
-        for (let i = 0; message.length - 1; i++) {
-            this.messages[i] = new Message(message[i].id, message[i].filename, message[i].sender);
-        }
-});
+      this.getMessages().subscribe(message => {
+          for(let i=0; i<message.length;i++) {
+              this.messages.push(new Message(message[i]["id"],message[i]["subject"],message[i]["sender"]["userName"]));
+          }
+    });
 }
 
     getMessages(): Observable<Message[]> {
