@@ -6,7 +6,6 @@ import {Message} from '../../_models/message';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-right-messaging-pane',

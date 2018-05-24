@@ -5,7 +5,7 @@
 
     <section id="messages">
         <section *ngFor="let messageBubble of messages" [class.sent]="messageBubble.sender === currentUserName" (click)="downloadFile(messageBubble.id)">
-               <a href="{{messagesUrl}}/{{messageBubble.id}}" target="_blank">{{messageBubble.filename}}</a>
+               <a [routerLink]="['messagesUrl/messageBubble.id']" target="_blank">{{messageBubble.filename}}</a>
         </section>
     </section>
 
