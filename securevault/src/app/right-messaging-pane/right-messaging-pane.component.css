@@ -91,3 +91,7 @@ img {
 #sentImage {
     float: right;
 }
+
+a {
+    text-decoration: none;
+}
