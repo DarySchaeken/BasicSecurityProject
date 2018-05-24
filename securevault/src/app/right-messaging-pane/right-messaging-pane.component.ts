@@ -15,7 +15,7 @@ import 'rxjs/add/operator/map';
 export class RightMessagingPaneComponent implements OnInit {
     private selectedFile: File = null;
     private fileUploadUrl = environment.apiUrl + 'message/sendMessage';
-    private messagesUrl = environment.apiUrl + 'message';
+    public messagesUrl = environment.apiUrl + 'message';
     public currentUserName;
     public messages: Message[];
     @ViewChild('message') message: ElementRef;
